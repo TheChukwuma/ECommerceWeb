@@ -1,7 +1,6 @@
 package com.chukwuma.commerceweb.controller;
 
 import com.chukwuma.commerceweb.dao.ProductDAO;
-import com.chukwuma.commerceweb.model.Product;
 import com.chukwuma.commerceweb.util.DBConnection;
 
 import javax.servlet.*;
@@ -15,6 +14,7 @@ public class ProductPriceUpdatedServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
     }
 
     @Override
@@ -25,7 +25,7 @@ public class ProductPriceUpdatedServlet extends HttpServlet {
             Double price = Double.valueOf(request.getParameter("product-price"));
             ProductDAO productDAO = new ProductDAO(DBConnection.getConnection());
             productDAO.updatePrice(name, price);
-            out.println("Price of " + name+ " has been updated in the store.");
+            out.println("The Price of " + name + " has been set to " + price + " and updated in the store.");
         }
     }
 }

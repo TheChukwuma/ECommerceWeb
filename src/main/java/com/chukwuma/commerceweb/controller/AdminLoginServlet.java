@@ -24,14 +24,19 @@ public class AdminLoginServlet extends HttpServlet {
         try(PrintWriter out = response.getWriter()){
             String email = request.getParameter("login-admin-email");
             String password = request.getParameter("login-admin-password");
-            int adminID = Integer.parseInt(request.getParameter("admin-id"));
+            int adminID = Integer.parseInt(request.getParameter("login-admin-id"));
             AdminDAO adminDao = new AdminDAO(DBConnection.getConnection());
-            User admin = adminDao.adminLogin(email, password, adminID);
-            if (admin != null){
-                out.println("user login");
-                request.getSession().setAttribute("auth", admin);
+            String loginResult = adminDao.adminLogin(email, password, adminID);
+            User admin = new User(email, password, adminID);
+            if (loginResult.equals("Successful login")){
+                request.getSession().setAttribute("auth-admin", admin);
                 response.sendRedirect("index.jsp");
-            }else {out.println("login failed");}
+            }else if (loginResult.equals("Failed login")){
+                out.println("login failed");
+                response.sendRedirect("login-admin.jsp");
+                out.println("login failed");
+                out.println("Please try again");
+            } else {out.println("my algorithm failed");}
 
         }
     }

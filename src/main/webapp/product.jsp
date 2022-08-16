@@ -1,11 +1,20 @@
-<%--
-  Created by IntelliJ IDEA.
+<%@ page import="com.chukwuma.commerceweb.model.Cart" %>
+<%@ page import="java.util.ArrayList" %><%-- Created by IntelliJ IDEA.
   User: decagon
   Date: 11/08/2022
   Time: 00:19
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+    ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
+    if (cart_list != null){
+        request.setAttribute("cart_list", cart_list);
+    }
+%>
+
+<!Doctype html>
 <html>
 <head>
     <title>Product Page</title>
@@ -31,6 +40,8 @@
                         <option value="Amplifier">Amplifier</option>
                         <option value="Home Theatre">Home Theatre</option>
                         <option value="Mixing Console">Mixing Console</option>
+                        <option value="Keyboard">Keyboard</option>
+                        <option value="DSP">DSP</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -83,7 +94,7 @@
                 </div>
                 <div class="form-group">
                     <label>Quantity</label>
-                    <input type="number" class="form-control" name="product-price" placeholder="Product's New Quantity" required>
+                    <input type="number" class="form-control" name="product-quantity" placeholder="Product's New Quantity" required>
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">UPDATE</button>
@@ -106,7 +117,6 @@
                     <button type="submit" class="btn btn-primary">DELETE</button>
                 </div>
             </form>
-
         </div>
     </div>
 </div>

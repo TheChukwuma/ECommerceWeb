@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.chukwuma.commerceweb.model.Cart" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: decagon
   Date: 09/08/2022
@@ -6,6 +7,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
+    if (cart_list != null){
+        request.setAttribute("cart_list", cart_list);
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>

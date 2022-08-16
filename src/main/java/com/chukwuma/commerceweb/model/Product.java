@@ -16,6 +16,15 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public Product(int id, String name, String category, Double price, Long quantity, String image) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.price = price;
+        this.quantity = quantity;
+        this.image = image;
+    }
+
     public Product(String name, String category, Double price, Long quantity) {
         this.name = name;
         this.category = category;

@@ -29,8 +29,11 @@ public class SignUpServlet extends HttpServlet {
             UserDAO userDao = new UserDAO(DBConnection.getConnection());
             User user = new User(firstName, lastName, email, password, phoneNumber);
             userDao.signUp(user);
-            out.println(user);
+            out.println("Dear " + user.getFirst_name() + ", you have successfully signed up!");
+            Thread.sleep(2000);
             response.sendRedirect("login-user.jsp");
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }

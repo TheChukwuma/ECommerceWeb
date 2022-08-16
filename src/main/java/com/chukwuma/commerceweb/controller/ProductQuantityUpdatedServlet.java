@@ -1,17 +1,18 @@
 package com.chukwuma.commerceweb.controller;
 
 import com.chukwuma.commerceweb.dao.ProductDAO;
-import com.chukwuma.commerceweb.model.Product;
 import com.chukwuma.commerceweb.util.DBConnection;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "ProductPriceUpdatedServlet", value = "/ProductPriceUpdatedServlet")
-public class ProductPriceUpdatedServlet extends HttpServlet {
+@WebServlet(name = "ProductQuantityUpdatedServlet", value = "/ProductQuantityUpdatedServlet")
+public class ProductQuantityUpdatedServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -22,10 +23,10 @@ public class ProductPriceUpdatedServlet extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         try(PrintWriter out = response.getWriter()){
             String name = request.getParameter("product-name");
-            Double price = Double.valueOf(request.getParameter("product-price"));
+            Long qty = Long.valueOf(request.getParameter("product-quantity"));
             ProductDAO productDAO = new ProductDAO(DBConnection.getConnection());
-            productDAO.updatePrice(name, price);
-            out.println("Price of " + name+ " has been updated in the store.");
+            productDAO.updateQuantity(name, qty);
+            out.println("Quantity of " + name + " has been set to " + qty + " and updated in the store.");
         }
     }
 }

@@ -12,11 +12,8 @@ public class AdminDAO {
     private final Connection connection;
     private PreparedStatement pst;
     private ResultSet resultSet;
-    private static final String INSERT_ADMIN_USER_SQL = "INSERT INTO users" +
-            " (first_name, last_name, email, password, phone_number, admin_id) VALUES" +
-            " (?,?,?,?,?,?);";
-    private static final String SELECT_USER_BY_EMAIL_PASSWORD_AND_ID = "SELECT first_name, email, admin_id FROM" +
-            "  WHERE email =? AND password=? AND admin_id = ?";
+    private static final String INSERT_ADMIN_USER_SQL = "INSERT INTO users (first_name, last_name, email, password, phone_number, admin_id) VALUES (?,?,?,?,?,?);";
+    private static final String SELECT_USER_BY_EMAIL_PASSWORD_AND_ID = "SELECT first_name, email, admin_id FROM users  WHERE email =? AND password=? AND admin_id = ?;";
 
 
     public AdminDAO(Connection connection) {
@@ -29,8 +26,8 @@ public class AdminDAO {
         this.resultSet = resultSet;
     }
 
-    public User adminLogin(String email, String password, int adminID){
-        User user = new User();
+    public String adminLogin(String email, String password, int adminID){
+        String result = "";
         try{
             pst = this.connection.prepareStatement(SELECT_USER_BY_EMAIL_PASSWORD_AND_ID);
             pst.setString(1, email);
@@ -39,17 +36,15 @@ public class AdminDAO {
             resultSet = pst.executeQuery();
             System.out.println("firstHello");
 
-            while (resultSet.next()) {
-                user.setUser_id(resultSet.getInt("admin_id"));
-                user.setFirst_name(resultSet.getString("first_name"));
-                user.setEmail(resultSet.getString("email"));
-            }
+            if (resultSet.next()) {
+                result = "Successful login";
+            } else {result = "Failed login";}
 
         }catch(SQLException e){
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
-        return user;
+        return result;
     }
 
     //The video named this method insert user

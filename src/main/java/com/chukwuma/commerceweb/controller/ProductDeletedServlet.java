@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "ProductPriceUpdatedServlet", value = "/ProductPriceUpdatedServlet")
-public class ProductQuantityUpdatedServlet extends HttpServlet {
+@WebServlet("/ProductDeletedServlet")
+public class ProductDeletedServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -22,11 +22,11 @@ public class ProductQuantityUpdatedServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html; charset=UTF-8");
         try(PrintWriter out = response.getWriter()){
+            System.out.println("delete servlet");
             String name = request.getParameter("product-name");
-            Long qty = Long.valueOf(request.getParameter("product-quantity"));
             ProductDAO productDAO = new ProductDAO(DBConnection.getConnection());
-            productDAO.updateQuantity(name, qty);
-            out.println("Quantity of " + name + " has been set to " + qty + " and updated in the store.");
+            productDAO.deleteAProduct(name);
+            out.println( name + " has been deleted from the store.");
         }
     }
 }

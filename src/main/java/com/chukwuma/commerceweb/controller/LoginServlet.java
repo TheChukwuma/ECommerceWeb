@@ -24,15 +24,19 @@ public class LoginServlet extends HttpServlet {
             //out.println("this is login servlet");
             String email = request.getParameter("login-user-email");
             String password = request.getParameter("login-user-password");
+            User user = new User(email, password);
             UserDAO userDao = new UserDAO(DBConnection.getConnection());
-            User user = userDao.userLogin(email, password);
-            System.out.println("are you null?");
-            if (user != null){
-                System.out.println("are you a new null?");
-                out.println("user login");
+            String loginResult = userDao.userLogin(email, password);
+            if (loginResult.equals("Successful login")){
+               // out.println("User logged in successfully!");
                 request.getSession().setAttribute("auth", user);
                 response.sendRedirect("index.jsp");
-            }else {out.println("login failed");}
+            }else if (loginResult.equals("Failed login")){
+                out.println("login failed");
+                response.sendRedirect("login-user.jsp");
+                out.println("login failed");
+                out.println("Please try again");
+            } else {out.println("my algorithm failed");}
 
         }
     }
